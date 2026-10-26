@@ -13,3 +13,6 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Briefing pessoal para o assistente de IA (não versionado)
+/CLAUDE.md

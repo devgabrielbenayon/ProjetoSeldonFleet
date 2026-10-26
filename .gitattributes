@@ -1,0 +1,14 @@
+# Normaliza finais de linha no repositório (LF), independente do SO de quem commita
+* text=auto eol=lf
+
+# Scripts do Windows precisam de CRLF para rodar no cmd/PowerShell
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binários: nunca converter
+*.jar binary
+*.png binary
+*.webp binary
+*.jpg binary
+*.keystore binary
+*.jks binary
