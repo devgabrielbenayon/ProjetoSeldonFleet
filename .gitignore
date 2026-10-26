@@ -16,3 +16,6 @@ local.properties
 
 # Briefing pessoal para o assistente de IA (não versionado)
 /CLAUDE.md
+
+# Configurações locais do Android Studio
+/.idea/
