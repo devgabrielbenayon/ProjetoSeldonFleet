@@ -69,7 +69,7 @@ da seção 4.
 
 **Isto é uma estimativa, não uma medição.** O emulador não tem bateria física. A medição correta
 seria em aparelho real, com o Power Profiler do Android Studio, Perfetto ou `batterystats`
-(seção 7).
+(seção 8). O comportamento da política foi validado no emulador (seção 7).
 
 Uma execução tem três fases:
 
@@ -159,7 +159,27 @@ que tem menos folga.
 
 ---
 
-## 7. Limitações e como validar
+## 7. Validação funcional no emulador
+
+Feita em 27/10/2026 no emulador "Medium Phone API 37" (3,8 GB de RAM). Valida o **comportamento**
+da política, não o consumo: o emulador não tem bateria física.
+
+| Passo | Como | Observado |
+|---|---|---|
+| Classificação | RAM total de 3,8 GB < corte de 5 GB | Tratado como aparelho fraco (`LOW_END`) |
+| Agendamento | `adb shell dumpsys jobscheduler` | Job `FleetRefreshWorker` com `CHARGING` e `BATTERY_NOT_LOW` |
+| Sem carregador | bateria em 100 %, desconectado | Job retido: única restrição não satisfeita era `CHARGING` |
+| Carregador ligado | `adb shell dumpsys battery set ac 1` | `Worker result SUCCESS` em menos de 1 s; o job volta a esperar o próximo período (`TIMING_DELAY`) |
+
+Duas observações confirmam premissas das seções 3 e 4:
+- **Agrupamento:** no mesmo instante em que o carregador foi ligado, workers de outros apps do
+  sistema também rodaram — o custo de acordar o aparelho é dividido entre eles.
+- **Trabalho útil mínimo:** entre o início do worker e o `SUCCESS` passaram **27 ms** (com o processo
+  já aberto). O custo real está em acordar o aparelho e iniciar o processo, não na leitura do arquivo.
+
+---
+
+## 8. Limitações e como validar o consumo
 
 - **Correntes estimadas.** Os números da seção 4 são premissas. Para validar: instalar em um aparelho
   físico de cada tier, forçar o job com
