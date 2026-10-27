@@ -108,8 +108,9 @@ e por que a recomendação muda por tier — está em **[TRILHA_C.md](TRILHA_C.m
 
 ## Uso de IA
 
-- **Claude:** planejamento do projeto, desenho do domínio e explicação de conceitos
-  (camadas, inversão de dependência, coroutines, DataStore).
+- **Claude:** auxiliou no planejamento do projeto, no desenho do domínio e na escrita do código
+  (sugestões de implementação, estrutura das camadas e resolução de erros), além de explicar
+  conceitos como camadas, inversão de dependência, coroutines e DataStore.
 
 ## O que eu faria em seguida
 
