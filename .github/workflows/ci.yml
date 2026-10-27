@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v5
+
+      # Mesma versão de JDK exigida pelo projeto (gradle/gradle-daemon-jvm.properties)
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '25'
+
+      # Cache das dependências e do Gradle entre execuções
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Permissão de execução do wrapper
+        run: chmod +x gradlew
+
+      - name: Análise estática (lint) e testes de unidade
+        run: ./gradlew lint testDebugUnitTest --stacktrace
+
+      # Relatórios ficam disponíveis na aba Actions mesmo quando algo falha
+      - name: Publica relatórios
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorios
+          path: |
+            app/build/reports/
+            app/build/test-results/
