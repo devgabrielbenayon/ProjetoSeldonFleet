@@ -56,6 +56,7 @@ class DeviceMapperTest {
     fun `mapper converte a energia e copia os demais campos`() {
         val device = dto.toDomain()!!
         assertEquals(980.0, device.energyConsumedMah!!, 1e-9)
+        assertEquals("mWh", device.energyReportedUnit)
         assertEquals("DEV-0204", device.id)
         assertEquals(5000, device.batteryCapacityMah)
         assertEquals(186, device.screenOnMinutes)

@@ -21,6 +21,7 @@ fun DeviceDto.toDomain(): Device? {
         jankFramesPct = jankFramesPct,
         crashCount7d = crashCount7d,
         lastSeen = lastSeen,
+        energyReportedUnit = energyUnit,
     )
 }
 

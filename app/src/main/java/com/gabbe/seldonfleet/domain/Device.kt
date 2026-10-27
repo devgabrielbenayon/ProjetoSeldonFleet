@@ -20,4 +20,7 @@ data class Device(
     val jankFramesPct: Double?,
     val crashCount7d: Int?,
     val lastSeen: String?,
+    // Unidade em que o aparelho reportou o consumo. Só para exibição/auditoria:
+    // a regra usa exclusivamente energyConsumedMah.
+    val energyReportedUnit: String? = null,
 )
