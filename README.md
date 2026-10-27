@@ -43,6 +43,7 @@ Todos os testes rodam na JVM, sem emulador. A CI (GitHub Actions) roda `lint` e
 | `DataStoreFavoritesRepositoryTest` | 3 | Favoritos persistem após recriar o DataStore |
 | `ReasonTextTest` | 8 | A frase do detalhe, incluindo o exemplo da especificação |
 | `FleetViewModelTest` | 6 | Contagens, filtro, filtro restaurado, favoritos e erro de leitura, com repositórios *fake* |
+| `RefreshPolicyTest` | 9 | Política da atualização periódica: classe do aparelho pela RAM, intervalos e restrições |
 
 Os testes prendem o comportamento: trocar `>=` por `>` na regra, ou desligar a conversão de mWh,
 faz a suíte falhar (verificado durante o desenvolvimento).
@@ -65,6 +66,7 @@ app/src/main/java/com/gabbe/seldonfleet/
 ├── data/          FleetDto, DeviceMapper (mWh → mAh), FleetParser,
 │                  AssetDeviceRepository, DataStoreFavoritesRepository
 ├── ui/            fleet/ (lista), detail/ (detalhe), navegação, textos e cores
+├── work/          atualização periódica com WorkManager (Trilha C)
 ├── AppContainer.kt    injeção de dependência manual
 └── SeldonFleetApp.kt  Application que cria o container
 ```
@@ -96,6 +98,13 @@ Em resumo:
   "Sem dados", e campos descritivos ausentes aparecem como "—".
 - **Ameaça à validade:** o limiar é o mesmo para todos os tiers, mas o aparelho `low` típico desta
   frota já fica acima do limiar de Atenção (mediana de 7,5 %/h contra 5,6 %/h nos `high`).
+
+## Trilha C — Eficiência energética
+
+Atualização periódica da frota com WorkManager: a cada 12 h em aparelhos comuns e a cada 24 h, só
+carregando, em aparelhos fracos (detectados pela RAM), sempre com bateria não baixa. A análise
+quantitativa — custo estimado por execução, % de bateria por dia em cada frequência, efeito do Doze
+e por que a recomendação muda por tier — está em **[TRILHA_C.md](TRILHA_C.md)**.
 
 ## Uso de IA
 
