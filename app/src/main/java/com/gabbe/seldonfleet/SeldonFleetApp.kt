@@ -1,8 +1,9 @@
 package com.gabbe.seldonfleet
 
 import android.app.Application
+import com.gabbe.seldonfleet.work.FleetRefreshScheduler
 
-// Cria o container uma vez por processo; Activities e ViewModels o pegam daqui.
+// Cria o container uma vez por processo; Activities, ViewModels e o Worker o pegam daqui.
 class SeldonFleetApp : Application() {
     lateinit var container: AppContainer
         private set
@@ -10,5 +11,6 @@ class SeldonFleetApp : Application() {
     override fun onCreate() {
         super.onCreate()
         container = AppContainer(applicationContext)
+        FleetRefreshScheduler.schedule(this)
     }
 }

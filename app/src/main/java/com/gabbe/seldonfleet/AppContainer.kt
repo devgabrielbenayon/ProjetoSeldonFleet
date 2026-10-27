@@ -3,6 +3,7 @@ package com.gabbe.seldonfleet
 import android.content.Context
 import com.gabbe.seldonfleet.data.AssetDeviceRepository
 import com.gabbe.seldonfleet.data.DataStoreFavoritesRepository
+import com.gabbe.seldonfleet.data.FleetCache
 import com.gabbe.seldonfleet.data.favoritesDataStore
 import com.gabbe.seldonfleet.domain.ClassifyDevice
 import com.gabbe.seldonfleet.domain.DeviceRepository
@@ -17,4 +18,5 @@ class AppContainer(context: Context) {
     val favoritesRepository: FavoritesRepository =
         DataStoreFavoritesRepository(context.favoritesDataStore)
     val classifyDevice = ClassifyDevice()
+    val fleetCache = FleetCache()
 }
